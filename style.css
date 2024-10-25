@@ -1,0 +1,127 @@
+body {
+    font-family:'Trebuchet MS';
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 30px;
+    color: white;
+}
+
+body {
+    background-color: #18191e;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+.container {
+    position: relative;
+    width: 50%;
+}
+  
+img {
+    height: 470px;
+    width: 840px;
+    border: 5px solid #3498db;
+    padding: 5px;
+    border-radius: 18px;
+    display: inline-block;
+    border-radius: 100px;
+    margin-top: 30px;
+}
+
+.container .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 8px 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+  
+.container .btn:hover {
+    background-color: black;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+}
+
+#progress-bar {
+    height: 25px;
+    background-color: #4caf50;
+    width: 0;
+    transition: width 0.3s;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#progress-bar-container {
+    width: 30%;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+#progress {
+    width: 0;
+    height: 30px;
+    background-color: #4caf50;
+    border-radius: 10px;
+}
+.resonating {
+    animation: resonate 0.3s ease;
+}
+
+@keyframes resonate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.coin-animation {
+    position: absolute;
+    font-size: 40px;
+    color: white;
+    animation: fly 1s forwards;
+}
+
+@keyframes fly {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+}
+
+
+#resetButton {
+    font-family:'Trebuchet MS';
+    border-radius: 10px;
+}

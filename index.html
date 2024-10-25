@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Churka Coin</title>
+</head>
+
+<body>
+    <h1>CHURKA COIN</h1>
+
+    <div id="count">Churka coins: 0</div>
+    <div>
+        <p>Уровень: <span id="level">1</span></p>
+    </div>
+    <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+    </div>
+    <img id="imageButton" onclick="handleImageClick()" src="arian.jpg" style="cursor: pointer;"> 
+    <button id="resetButton" onclick="resetProgress()">Reset progress</button> <!-- Кнопка сброса -->
+
+    <script>
+    const countElement = document.getElementById('count');
+const levelElement = document.getElementById('level');
+const progressBar = document.getElementById("progress-bar");
+const imageButton = document.getElementById('imageButton');
+
+let count = localStorage.getItem('count') ? parseInt(localStorage.getItem('count')) : 0;
+let experience = localStorage.getItem('experience') ? parseInt(localStorage.getItem('experience')) : 0;
+let level = localStorage.getItem('level') ? parseInt(localStorage.getItem('level')) : 1;
+let maxExperience = 5 * Math.pow(2, level - 1); 
+let spacePressed = false; 
+
+updateUI();
+
+imageButton.addEventListener('click', handleImageClick);
+
+document.addEventListener('keydown', (event) => {
+    if (event.code === "Space" && !spacePressed) {
+        event.preventDefault(); 
+        spacePressed = true; 
+        handleImageClick(); 
+    }
+});
+
+document.addEventListener('keyup', (event) => {
+    if (event.code === "Space") {
+        spacePressed = false; 
+    }
+});
+
+function handleImageClick() {
+    imageButton.classList.add('resonating');
+    setTimeout(() => {
+        imageButton.classList.remove('resonating');
+    }, 300);
+
+    handleClick(); 
+    showCoinAnimation("+1"); // Показать анимацию
+}
+
+function handleClick() {
+    count++;
+    localStorage.setItem('count', count);
+    countElement.textContent = "Churka coins: " + count;
+
+    // Добавляем опыт только если уровень не максимален
+    if (experience < maxExperience) {
+        experience++; // Увеличиваем опыт на 1
+        localStorage.setItem('experience', experience);
+        updateProgressBar();
+        
+        // Если опыт достиг максимума, выполняем уровень
+        if (experience >= maxExperience) {
+            levelUp();
+        }
+    }
+
+    if (count >= 321) {
+        imageButton.src = "arian500.jpg"; 
+    }
+}
+
+function showCoinAnimation(value) {
+    const coinAnimation = document.createElement('div');
+    coinAnimation.className = 'coin-animation';
+    coinAnimation.textContent = value;
+
+    const rect = imageButton.getBoundingClientRect();
+    coinAnimation.style.left = rect.left + (rect.width / 2) + 'px';
+    
+    coinAnimation.style.top = rect.top + (rect.height / 2) + 'px';
+
+    document.body.appendChild(coinAnimation);
+
+    setTimeout(() => {
+        coinAnimation.remove();
+    }, 1000);
+}
+
+function levelUp() {
+    level++;
+    experience = 0; // Сбросить опыт для следующего уровня
+    localStorage.setItem('level', level);
+    localStorage.setItem('experience', experience);
+    maxExperience = 5 * Math.pow(2, level - 1); 
+    updateUI();
+}
+
+function updateProgressBar() {
+    progressBar.style.width = (experience / maxExperience) * 100 + '%';
+    if (experience >= maxExperience) {
+        progressBar.style.backgroundColor = 'gold'; 
+    } else {
+        progressBar.style.backgroundColor = '#4caf50';
+    }
+}
+
+function updateUI() {
+    countElement.textContent = "Churka coins: " + count;
+    levelElement.textContent = level;
+    updateProgressBar();
+}
+
+function resetProgress() {
+    localStorage.removeItem('count');
+    localStorage.removeItem('experience');
+    localStorage.removeItem('level');
+    count = 0;
+    experience = 0;
+    level = 1;
+    maxExperience = 5 * Math.pow(2, level - 1);
+    updateUI();
+}
+    </script>
+
+</body>
+</html>
